@@ -1,5 +1,7 @@
-Deploy your application using SSH
-=================================
+Deploy your application to servers or containers
+================================================
+
+> **THIS IS CURRENTLY WORK IN PROGRESS** - once v1 is released there will be no more major changes.
 
 After a successful test run, this action can copy the project's files via SSH to another server, a remote Docker container, or into a fresh server.
 
@@ -31,5 +33,5 @@ jobs:
         with:
           hostname: deploy.example.com
           user: webdeploy
-          copy_to: /var/www/example.com
+          path: /var/www/example.com
 ```

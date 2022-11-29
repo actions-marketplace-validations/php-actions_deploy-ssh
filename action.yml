@@ -1,0 +1,45 @@
+name: Deploy (php-actions)
+description: Deploy your application to servers or containers
+
+inputs:
+  hostname:
+    description: The hostname of the remote server to SSH to
+    required: true
+
+  port:
+    description: The port of the remote server to SSH to
+    required: true
+    default: "22"
+
+  user:
+    description: The SSH user to use for deployment
+    required: true
+    default: "deploy"
+
+  path:
+    description: Absolute path on the remote server to deploy into
+    required: true
+    default: "/app"
+
+  transfer_path:
+    description: Absolute path on the remote server to use for the transfer
+    required: true
+    default: "/tmp/php-actions--deploy/"
+
+runs:
+  using: "composite"
+  steps:
+    - env:
+        ACTION_TOKEN: ${{ github.token }}
+        ACTION_HOSTNAME: ${{ inputs.hostname }}
+        ACTION_PORT: ${{ inputs.port }}
+        ACTION_USER: ${{ inputs.user }}
+        ACTION_PATH: ${{ inputs.path }}
+        ACTION_TRANSFER_PATH: ${{ inputs.transfer_path }}
+      id: deploy_run
+      run: ${{ github.action_path }}/deploy-action.bash
+      shell: bash
+
+branding:
+  icon: "upload-cloud"
+  color: "purple"
