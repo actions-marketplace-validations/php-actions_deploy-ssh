@@ -37,5 +37,5 @@ jobs:
           ssh_key: {{ secrets.deploy_ssh_key }}
 ```
 
-To generate an SSH key using the RSA algorithm, `ssh-keygen -t rsa -b 4096 -C "deploy@github-acions"` - then paste the contents of the generated private key into your project's Github Secrets.
+To generate an SSH key pair (private and public) using the RSA algorithm, `ssh-keygen -t rsa -b 4096 -C "deploy@github-acions"`. To convert a key pair into PEM format, `ssh-keygen -f actions_rsa -e -m pem` - then paste the contents of the generated PEM file into your project's Github Secrets.
 
