@@ -8,15 +8,14 @@ echo "$ACTION_SSH_KEY" > "$ssh_key_path"
 chmod g-rw,o-rw "$ssh_key_path"
 cd "$GITHUB_WORKSPACE"
 tar -czf - . | \
-	ssh -vvv \
+	ssh \
 	-i "$ssh_key_path" \
 	-p "$ACTION_PORT" \
 	"$ACTION_USER"@"$ACTION_HOSTNAME" \
 	"mkdir -p $full_transfer_path && cd $full_transfer_path && tar -xzvf -"
+printenv
 # TODO:
-# This should copy the files to the server.
-# Documentation is needed for getting SSH keys set up as secrets.
-# The transferred directory might be full of crap directories - can tar convert the path to relative to the $GITHUB_WORKSPACE?
+# This copies the files to the server.
 # Once transferred, what's the best way to switch the current $ACTION_PATH with the newly-deployed?
 # It's probable that the newly-created directory, once moved in place, will require symlinks adding to mount points (for external volumes)... how should this be handled?
 # On that same note, there will be certain deploy-specific config files needing putting in place... in real apps this will be a branch name database schema, but we could just put the branch name in the config.development.ini and echo it in PHP to prove that it's working...
