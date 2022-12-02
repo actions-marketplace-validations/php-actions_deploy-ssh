@@ -7,7 +7,7 @@ ssh_key_path=~/.ssh/action_rsa
 echo "$ACTION_SSH_KEY" > "$ssh_key_path"
 chmod g-rw,o-rw "$ssh_key_path"
 cd "$GITHUB_WORKSPACE"
-tar -czf - --exclude="./.git/" . | \
+tar -czf - --exclude-vcs . | \
 	ssh \
 	-i "$ssh_key_path" \
 	-p "$ACTION_PORT" \
