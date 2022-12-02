@@ -1,8 +1,16 @@
 #!/bin/bash
 set -e
 full_transfer_path="$ACTION_TRANSFER_PATH/$GITHUB_SHA"
-tar -czf - "$GITHUB_WORKSPACE" | \
-	ssh -p "$ACTION_PORT" "$ACTION_USER"@"$ACTION_HOSTNAME" \
+mkdir -p ~/.ssh
+ssh-keyscan -t rsa "$ACTION_HOSTNAME" >> ~/.ssh/known_hosts
+ssh_key_path=~/.ssh/action_rsa
+echo "$ACTION_SSH_KEY" > "$ssh_key_path"
+cd "$GITHUB_WORKSPACE"
+tar -czf - . | \
+	ssh \
+	-i "$ssh_key_path" \
+	-p "$ACTION_PORT" \
+	"$ACTION_USER"@"$ACTION_HOSTNAME" \
 	"mkdir -p $full_transfer_path && cd $full_transfer_path && tar -xzvf -"
 
 # TODO:

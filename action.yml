@@ -2,6 +2,10 @@ name: Deploy (php-actions)
 description: Deploy your application to servers or containers
 
 inputs:
+  ssh_key:
+    description: The private key to use for SSH connection
+    required: false
+
   hostname:
     description: The hostname of the remote server to SSH to
     required: true
@@ -22,7 +26,7 @@ inputs:
     default: "/app"
 
   transfer_path:
-    description: Absolute path on the remote server to use for the transfer
+    description: Absolute path on the remote server to use for the transfer, which will contain a directory named as the current Git SHA
     required: true
     default: "/tmp/php-actions--deploy/"
 
@@ -31,6 +35,7 @@ runs:
   steps:
     - env:
         ACTION_TOKEN: ${{ github.token }}
+        ACTION_SSH_KEY: ${{ input.ssh_key }}
         ACTION_HOSTNAME: ${{ inputs.hostname }}
         ACTION_PORT: ${{ inputs.port }}
         ACTION_USER: ${{ inputs.user }}
