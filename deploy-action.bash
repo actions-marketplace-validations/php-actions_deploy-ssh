@@ -12,7 +12,6 @@ tar -czf - . | \
 	-p "$ACTION_PORT" \
 	"$ACTION_USER"@"$ACTION_HOSTNAME" \
 	"mkdir -p $full_transfer_path && cd $full_transfer_path && tar -xzvf -"
-
 # TODO:
 # This should copy the files to the server.
 # Documentation is needed for getting SSH keys set up as secrets.

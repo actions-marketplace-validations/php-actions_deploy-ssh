@@ -34,4 +34,8 @@ jobs:
           hostname: deploy.example.com
           user: webdeploy
           path: /var/www/example.com
+          ssh_key: {{ secrets.deploy_ssh_key }}
 ```
+
+To generate an SSH key using the RSA algorithm, `ssh-keygen -t rsa -b 4096 -C "deploy@github-acions"` - then paste the contents of the generated private key into your project's Github Secrets.
+
