@@ -35,7 +35,7 @@ runs:
   steps:
     - env:
         ACTION_TOKEN: ${{ github.token }}
-        ACTION_SSH_KEY: ${{ input.ssh_key }}
+        ACTION_SSH_KEY: ${{ inputs.ssh_key }}
         ACTION_HOSTNAME: ${{ inputs.hostname }}
         ACTION_PORT: ${{ inputs.port }}
         ACTION_USER: ${{ inputs.user }}
