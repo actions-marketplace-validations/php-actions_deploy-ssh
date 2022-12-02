@@ -5,6 +5,7 @@ mkdir -p ~/.ssh
 ssh-keyscan -t rsa "$ACTION_HOSTNAME" >> ~/.ssh/known_hosts
 ssh_key_path=~/.ssh/action_rsa
 echo "$ACTION_SSH_KEY" > "$ssh_key_path"
+chmod g-rw,o-rw "$ssh_key_path"
 cd "$GITHUB_WORKSPACE"
 tar -czf - . | \
 	ssh \
