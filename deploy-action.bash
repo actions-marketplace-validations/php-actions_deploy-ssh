@@ -16,7 +16,12 @@ tar -czf - --exclude-vcs . | \
 	"$ACTION_USER"@"$ACTION_HOSTNAME" \
 	"mkdir -p $full_transfer_path && cd $full_transfer_path && tar -xzvf -"
 
-echo "TODO: Move to $ACTION_PATH/$GITHUB_REF_NAME"
+ssh \
+-i "$ssh_key_path" \
+-p "$ACTION_PORT" \
+"$ACTION_USER"@"$ACTION_HOSTNAME" \
+"bash -s" < ./remote-script.bash
+
 # TODO:
 # This copies the files to the server.
 # Once transferred, what's the best way to switch the current $ACTION_PATH with the newly-deployed?
