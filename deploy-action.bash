@@ -1,6 +1,7 @@
 #!/bin/bash
 set -e
-sudo apt install -y pv
+# shellcheck disable=SC2024
+sudo apt install -y pv > ./output.log
 full_transfer_path="$ACTION_TRANSFER_PATH/$GITHUB_SHA"
 mkdir -p ~/.ssh
 ssh-keyscan -t rsa "$ACTION_HOSTNAME" >> ~/.ssh/known_hosts
@@ -9,6 +10,7 @@ echo "$ACTION_SSH_KEY" > "$ssh_key_path"
 chmod g-rw,o-rw "$ssh_key_path"
 cd "$GITHUB_WORKSPACE"
 dir_size=$(du -sb --exclude "./.git" | grep -o "[0-9]*")
+echo "Transferring $dir_size bytes to $ACTION_HOSTNAME..."
 tar -cf - --exclude-vcs . | \
 	pv -s "$dir_size" | \
 	gzip | \
