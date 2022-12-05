@@ -16,11 +16,12 @@ tar -czf - --exclude-vcs . | \
 	"$ACTION_USER"@"$ACTION_HOSTNAME" \
 	"mkdir -p $full_transfer_path && cd $full_transfer_path && tar -xzvf -"
 
+action_dir="$(dirname -- "${BASH_SOURCE[0]}")"
 ssh \
 -i "$ssh_key_path" \
 -p "$ACTION_PORT" \
 "$ACTION_USER"@"$ACTION_HOSTNAME" \
-"bash -s" < ./remote-script.bash
+"bash -s" < "$action_dir"/remote-script.bash
 
 # TODO:
 # This copies the files to the server.
