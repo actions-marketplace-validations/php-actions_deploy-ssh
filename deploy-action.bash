@@ -7,12 +7,15 @@ ssh_key_path=~/.ssh/action_rsa
 echo "$ACTION_SSH_KEY" > "$ssh_key_path"
 chmod g-rw,o-rw "$ssh_key_path"
 cd "$GITHUB_WORKSPACE"
-tar -czf - --exclude-vcs . | \
+dir_size=$(du -sb --exclude "./.git" | grep -o "[0-9]*")
+tar -cf - --exclude-vcs . | \
+	pv -s "$dir_size" | \
+	gzip | \
 	ssh \
 	-i "$ssh_key_path" \
 	-p "$ACTION_PORT" \
 	"$ACTION_USER"@"$ACTION_HOSTNAME" \
-	"mkdir -p $full_transfer_path && cd $full_transfer_path && tar -xzvf -"
+	"mkdir -p $full_transfer_path && cd $full_transfer_path && tar -xzf -"
 
 echo "TODO: Move to $ACTION_PATH/$GITHUB_REF_NAME"
 # TODO:
