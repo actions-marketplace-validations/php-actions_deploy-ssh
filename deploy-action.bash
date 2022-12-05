@@ -1,5 +1,6 @@
 #!/bin/bash
 set -e
+sudo apt install -y pv
 full_transfer_path="$ACTION_TRANSFER_PATH/$GITHUB_SHA"
 mkdir -p ~/.ssh
 ssh-keyscan -t rsa "$ACTION_HOSTNAME" >> ~/.ssh/known_hosts
