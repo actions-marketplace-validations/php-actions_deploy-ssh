@@ -21,5 +21,6 @@ echo mv "$source_dir" "$destination_dir"
 echo "Completed post-transfer script"
 
 # TODO:
+# Receive the following:
 # Add symlinks from a definition list somewhere
 # Set a special deployment config variable

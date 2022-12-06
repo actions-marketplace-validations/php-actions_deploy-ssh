@@ -39,3 +39,4 @@ jobs:
 
 To generate an SSH key pair (private and public) using the RSA algorithm, `ssh-keygen -t rsa -b 4096 -C "deploy@github-acions"`. To convert a key pair into PEM format, `ssh-keygen -f actions_rsa -e -m pem` - then paste the contents of the generated PEM file into your project's Github Secrets.
 
+// TODO: Document post-transfer script, how it might need adding to sudoers if sudo is required.

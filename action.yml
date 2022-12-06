@@ -30,6 +30,16 @@ inputs:
     required: true
     default: "/tmp/php-actions--deploy"
 
+  post_transfer_script:
+    description: Path that post-transfer script will be moved to for execution
+    required: true
+    default: "~/post-transfer.bash"
+
+  post_transfer_script_prefix:
+    description: Command to run post-transfer script with (defaults to sudo, set to blank string or other command)
+    required: true
+    default: "sudo"
+
 runs:
   using: "composite"
   steps:
@@ -41,6 +51,8 @@ runs:
         ACTION_USER: ${{ inputs.user }}
         ACTION_PATH: ${{ inputs.path }}
         ACTION_TRANSFER_PATH: ${{ inputs.transfer_path }}
+        ACTION_POST_TRANSFER_SCRIPT: ${{ inputs.post_transfer_script }}
+        ACTION_POST_TRANSFER_SCRIPT_PREFIX: ${{ inputs.post_transfer_script_prefix }}
       id: deploy_run
       run: ${{ github.action_path }}/deploy-action.bash
       shell: bash
