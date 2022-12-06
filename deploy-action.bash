@@ -14,18 +14,21 @@ tar -czf - --exclude-vcs . | \
 	-i "$ssh_key_path" \
 	-p "$ACTION_PORT" \
 	"$ACTION_USER"@"$ACTION_HOSTNAME" \
-	"mkdir -p $full_transfer_path && cd $full_transfer_path && tar -xzvf -"
+	"mkdir -p $full_transfer_path && cd $full_transfer_path && tar -xzf -"
+echo "Transfer complete"
 
 action_dir="$(dirname -- "${BASH_SOURCE[0]}")"
-ssh \
--i "$ssh_key_path" \
--p "$ACTION_PORT" \
-"$ACTION_USER"@"$ACTION_HOSTNAME" \
-"bash -s" < "$action_dir"/remote-script.bash
+{ declare -p \
+	ACTION_PATH \
+	GITHUB_REF_NAME \
+	full_transfer_path \
+	; \
+cat "$action_dir"/remote-script.bash; } | \
+	ssh \
+	-i "$ssh_key_path" \
+	-p "$ACTION_PORT" \
+	"$ACTION_USER"@"$ACTION_HOSTNAME" \
+	bash -s
 
 # TODO:
-# This copies the files to the server.
-# Once transferred, what's the best way to switch the current $ACTION_PATH with the newly-deployed?
-# It's probable that the newly-created directory, once moved in place, will require symlinks adding to mount points (for external volumes)... how should this be handled?
-# On that same note, there will be certain deploy-specific config files needing putting in place... in real apps this will be a branch name database schema, but we could just put the branch name in the config.development.ini and echo it in PHP to prove that it's working...
-# For dev servers, there needs to be a way to deploy into a container with branch name, and for nginx to automatically know what to do with branchname.dev.example.com
+# remote-script.bash
