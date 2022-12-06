@@ -25,6 +25,11 @@ inputs:
     required: true
     default: "/app"
 
+  path_owner:
+    description: The user and group to change ownership of deployment path to after transfer
+    required: false
+    default: "."
+
   transfer_path:
     description: Absolute path on the remote server to use for the transfer, which will contain a directory named as the current Git SHA
     required: true
@@ -51,6 +56,7 @@ runs:
         ACTION_USER: ${{ inputs.user }}
         ACTION_PATH: ${{ inputs.path }}
         ACTION_TRANSFER_PATH: ${{ inputs.transfer_path }}
+        ACTION_PATH_OWNER: ${{ inputs.path_owner }}
         ACTION_POST_TRANSFER_SCRIPT: ${{ inputs.post_transfer_script }}
         ACTION_POST_TRANSFER_SCRIPT_PREFIX: ${{ inputs.post_transfer_script_prefix }}
       id: deploy_run

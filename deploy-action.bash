@@ -19,6 +19,7 @@ action_dir="$(dirname -- "${BASH_SOURCE[0]}")"
 	echo "#!/bin/bash"; \
 	declare -p \
 	ACTION_PATH \
+	ACTION_PATH_OWNER \
 	GITHUB_REF_NAME \
 	full_transfer_path \
 	; \
