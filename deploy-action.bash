@@ -20,7 +20,7 @@ action_dir="$(dirname -- "${BASH_SOURCE[0]}")"
 	GITHUB_REF_NAME \
 	full_transfer_path \
 	; \
-cat "$action_dir"/remote-script.bash; } > ./post-transfer.bash
+cat "$action_dir"/remote-post-transfer.bash; } > ./post-transfer.bash
 chmod +x ./post-transfer.bash
 # Archive directory and pipe over SSH:
 dir_size_human=$(du -sbh --exclude "./.git" | grep -o "[0-9]*")
