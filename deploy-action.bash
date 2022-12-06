@@ -13,6 +13,7 @@ chmod g-rw,o-rw "$ssh_key_path"
 
 cd "$GITHUB_WORKSPACE"
 # Pass in required variables to post-transfer script:
+full_transfer_path="$ACTION_TRANSFER_PATH/$GITHUB_SHA"
 action_dir="$(dirname -- "${BASH_SOURCE[0]}")"
 { declare -p \
 	ACTION_PATH \
@@ -24,7 +25,6 @@ chmod +x ./post-transfer.bash
 # Archive directory and pipe over SSH:
 dir_size_human=$(du -sbh --exclude "./.git" | grep -o "[0-9]*")
 echo "Transferring $dir_size_human bytes to $ACTION_HOSTNAME..."
-full_transfer_path="$ACTION_TRANSFER_PATH/$GITHUB_SHA"
 tar -czf - --exclude-vcs . | \
 	ssh \
 	-i "$ssh_key_path" \
