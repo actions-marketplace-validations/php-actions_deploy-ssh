@@ -1,11 +1,11 @@
-Deploy your application to servers or containers
-================================================
+Deploy your application via SSH.
+================================
 
 > **THIS IS CURRENTLY WORK IN PROGRESS** - once v1 is released there will be no more major changes.
 
-After a successful test run, this action can copy the project's files via SSH to another server, a remote Docker container, or into a fresh server.
+After a successful test run, this action can copy the project's files via SSH to another server, which could be an in-place deployment, or a fresh server that's set up for each deployment.
 
-An example repository has been created at https://github.com/php-actions/example-deploy to show how to use this action in development and production projects.
+An example repository has been created at https://github.com/php-actions/example-deploy-ssh to show how to use this action in development and production projects.
 
 Usage
 -----
