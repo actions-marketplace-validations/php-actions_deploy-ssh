@@ -1,4 +1,3 @@
-#!/bin/bash
 full_transfer_path=${full_transfer_path:-"/dev/null"}
 source_dir="$full_transfer_path"
 destination_dir="$ACTION_PATH/$GITHUB_REF_NAME"

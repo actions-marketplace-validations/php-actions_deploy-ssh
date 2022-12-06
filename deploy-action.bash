@@ -15,12 +15,15 @@ cd "$GITHUB_WORKSPACE"
 # Pass in required variables to post-transfer script:
 full_transfer_path="$ACTION_TRANSFER_PATH/$GITHUB_SHA"
 action_dir="$(dirname -- "${BASH_SOURCE[0]}")"
-{ declare -p \
+{
+	echo "#!/bin/bash"; \
+	declare -p \
 	ACTION_PATH \
 	GITHUB_REF_NAME \
 	full_transfer_path \
 	; \
-cat "$action_dir"/remote-post-transfer.bash; } > ./post-transfer.bash
+	cat "$action_dir"/remote-post-transfer.bash;
+} > ./post-transfer.bash
 chmod +x ./post-transfer.bash
 # Archive directory and pipe over SSH:
 dir_size_human=$(du -sbh --exclude "./.git" | grep -o "[0-9]*")
@@ -30,7 +33,7 @@ tar -czf - --exclude-vcs . | \
 	-i "$ssh_key_path" \
 	-p "$ACTION_PORT" \
 	"$ACTION_USER"@"$ACTION_HOSTNAME" \
-	"rm -rf $full_transfer_path && mkdir -p $full_transfer_path && cd $full_transfer_path && tar -xzf - && mv ./post-transfer.bash $ACTION_POST_TRANSFER_SCRIPT && echo $ACTION_POST_TRANSFER_SCRIPT_PREFIX $ACTION_POST_TRANSFER_SCRIPT && cat $ACTION_POST_TRANSFER_SCRIPT"
+	"rm -rf $full_transfer_path && mkdir -p $full_transfer_path && cd $full_transfer_path && tar -xzf - && mv ./post-transfer.bash $ACTION_POST_TRANSFER_SCRIPT && echo $ACTION_POST_TRANSFER_SCRIPT_PREFIX $ACTION_POST_TRANSFER_SCRIPT && cat $ACTION_POST_TRANSFER_SCRIPT && $ACTION_POST_TRANSFER_SCRIPT_PREFIX $ACTION_POST_TRANSFER_SCRIPT"
 echo "Transfer complete"
 
 #action_dir="$(dirname -- "${BASH_SOURCE[0]}")"
