@@ -28,7 +28,7 @@ inputs:
   transfer_path:
     description: Absolute path on the remote server to use for the transfer, which will contain a directory named as the current Git SHA
     required: true
-    default: "/tmp/php-actions--deploy/"
+    default: "/tmp/php-actions--deploy"
 
 runs:
   using: "composite"
