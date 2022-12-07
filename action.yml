@@ -28,7 +28,6 @@ inputs:
   path_owner:
     description: The user and group to change ownership of deployment path to after transfer
     required: false
-    default: "."
 
   transfer_path:
     description: Absolute path on the remote server to use for the transfer, which will contain a directory named as the current Git SHA

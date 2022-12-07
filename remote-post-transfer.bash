@@ -21,7 +21,7 @@ then
 fi
 
 mv "$source_dir" "$destination_dir"
-chown -R "$ACTION_PATH_OWNER" "$destination_dir"
+#chown -R "$ACTION_PATH_OWNER" "$destination_dir"
 
 echo "Completed post-transfer script"
 

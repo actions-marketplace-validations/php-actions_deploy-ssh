@@ -37,8 +37,22 @@ tar -czf - --exclude-vcs . | \
 	"rm -rf $full_transfer_path && mkdir -p $full_transfer_path && cd $full_transfer_path && tar -xzf - && mv ./post-transfer.bash $ACTION_POST_TRANSFER_SCRIPT && echo $ACTION_POST_TRANSFER_SCRIPT_PREFIX $ACTION_POST_TRANSFER_SCRIPT && $ACTION_POST_TRANSFER_SCRIPT_PREFIX $ACTION_POST_TRANSFER_SCRIPT"
 echo "Transfer complete"
 
+deployed_dir="$ACTION_PATH/$GITHUB_REF_NAME"
 if [ -n "$ACTION_AFTER_COMMAND" ]
 then
 	echo "Running after command: $ACTION_AFTER_COMMAND"
-	eval "$ACTION_AFTER_COMMAND"
+	ssh \
+        	-i "$ssh_key_path" \
+        	-p "$ACTION_PORT" \
+        	"$ACTION_USER"@"$ACTION_HOSTNAME" \
+	"cd $deployed_dir && $ACTION_AFTER_COMMAND"
+fi
+
+if [ -n "$ACTION_PATH_OWNER" ]
+then
+	ssh \
+		-i "$ssh_key_path" \
+		-p "$ACTION_PORT" \
+		"$ACTION_USER"@"$ACTION_HOSTNAME" \
+	"cd $deployed_dir && chown -R $ACTION_PATH_OWNER ."
 fi
