@@ -54,5 +54,5 @@ then
 		-i "$ssh_key_path" \
 		-p "$ACTION_PORT" \
 		"$ACTION_USER"@"$ACTION_HOSTNAME" \
-	"cd $deployed_dir && chown -R $ACTION_PATH_OWNER ."
+	"cd $full_transfer_path && $ACTION_POST_TRANSFER_SCRIPT_PREFIX $ACTION_POST_TRANSFER_SCRIPT CHOWN"
 fi
